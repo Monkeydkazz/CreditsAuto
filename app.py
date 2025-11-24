@@ -42,7 +42,7 @@ def load_data(path: str) -> pd.DataFrame:
     return df
 
 
-df = load_data("Base 01 - tableau de bord.xlsx")
+df = load_data("donnees_nettoyees.xlsx.xlsx")
 
 # ---------------------------
 # SIDEBAR – FILTRES
@@ -250,3 +250,4 @@ st.download_button(
     file_name="donnees_filtrees_credits_auto.csv",
     mime="text/csv"
 )
+
