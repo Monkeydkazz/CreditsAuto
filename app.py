@@ -258,12 +258,14 @@ st.markdown("---")
 # ---------------------------
 # TABLE + TÉLÉCHARGEMENT
 # ---------------------------
-st.subheader("Données détaillées (échantillon filtré)")
+st.subheader("Données détaillées (échantillon de 500 lignes)")
 
 st.dataframe(
     df_filtre.head(500),
     use_container_width=True
 )
+
+st.info(f"📊 Affichage de 500 lignes sur {len(df_filtre):,} au total. Utilisez le bouton de téléchargement pour obtenir toutes les données.")
 
 csv = df_filtre.to_csv(index=False).encode("utf-8")
 st.download_button(
