@@ -1,8 +1,8 @@
-# app.py
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+
 
 # ---------------------------
 # CONFIG GLOBALE
@@ -42,7 +42,8 @@ def load_data(path: str) -> pd.DataFrame:
     return df
 
 
-df = load_data("donnees_nettoyees.xlsx.xlsx")
+df = load_data("donnees_nettoyees.xlsx")
+
 
 # ---------------------------
 # SIDEBAR – FILTRES
@@ -219,14 +220,35 @@ if not df_filtre.empty:
         .sort_values("nombre", ascending=False)
         .head(15)
     )
+    
+    # Graphique amélioré avec barres horizontales et style moderne
     fig_dep = px.bar(
         top_dep,
         x="nombre",
         y="departement",
         orientation="h",
         labels={"departement": "Département", "nombre": "Nombre de demandes"},
+        color="nombre",
+        color_continuous_scale="blues",
+        text="nombre"
     )
-    fig_dep.update_layout(yaxis={"categoryorder": "total ascending"})
+    
+    fig_dep.update_layout(
+        yaxis={"categoryorder": "total ascending"},
+        height=500,
+        showlegend=False,
+        xaxis_title="Nombre de demandes",
+        yaxis_title="Département",
+        plot_bgcolor='white'
+    )
+    
+    fig_dep.update_traces(
+        texttemplate='%{text:,}',
+        textposition='outside',
+        marker_line_color='darkblue',
+        marker_line_width=1
+    )
+    
     st.plotly_chart(fig_dep, use_container_width=True)
 else:
     st.info("Aucune donnée pour les filtres sélectionnés.")
@@ -250,4 +272,3 @@ st.download_button(
     file_name="donnees_filtrees_credits_auto.csv",
     mime="text/csv"
 )
-
